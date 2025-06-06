@@ -100,9 +100,10 @@ function cleanDomainUrls(domains) {
     const cleanedUrl = obj.url
       .replace(/^(https?:\/\/)?(www\.)?/, '')
       .replace(/\/$/, '');
-    return { url: cleanedUrl };
+    return {url: cleanedUrl};
   });
 }
+
 async function calculateQPM(body) {
   const {dateRange, country, domains, useCase, caseDeflection} = body;
 
