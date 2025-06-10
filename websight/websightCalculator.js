@@ -142,7 +142,7 @@ async function calculateQPM(body) {
   const {averageVisits, averageBounceRates} = await requestSimilarWebData(cleanedDomains, params);
   const numAverageVisits = parseFloat(averageVisits);
   const potentialQueries = numAverageVisits * (1 - averageBounceRates);
-  const estimatedQPM = Math.round(potentialQueries * useCaseMultiplier * (caseDeflection / 100));
+  const estimatedQPM = Math.round(potentialQueries * useCaseMultiplier * caseDeflection);
 
   return {
     estimatedQPM: estimatedQPM, averageVisits: averageVisits, averageBounceRates: (averageBounceRates * 100).toFixed(2)
