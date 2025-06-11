@@ -17,12 +17,7 @@ const port = 3000;
 
 app.post("/similarWeb", async function (req, res) {
   try {
-    // const requesterEmail = req.body.email
-    // const assigneeID = await findAssigneeID(requesterEmail)
-    // const newIssue = await createJiraSubtaskWithLibrary(assigneeID, req.body.domains)
     const responseData = await calculateQPM(req.body);
-    // await updateJiraDescriptionWithResponse(newIssue, responseData)
-    // await editJiraTaskStatus(newIssue, assigneeID, "Done")
     res.json(responseData);
   } catch (err) {
     res.status(400).json({
