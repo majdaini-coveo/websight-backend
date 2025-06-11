@@ -8,7 +8,6 @@ const {
   createJiraSubtaskWithLibrary,
   findAssigneeID,
   editJiraTaskStatus,
-  updateJiraDescriptionWithResponse
 } = require("./websight/jiraHandler");
 
 
