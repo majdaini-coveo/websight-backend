@@ -31,8 +31,9 @@ async function findAssigneeID(email) {
   return user.accountId;
 }
 
-async function createJiraSubtaskWithLibrary(assigneeId, domains) {
+async function createJiraSubtaskWithLibrary(assigneeId, body) {
 
+  const domains = body.domains;
   try {
     return await client.issues.createIssue({
       fields: {
@@ -55,7 +56,59 @@ async function createJiraSubtaskWithLibrary(assigneeId, domains) {
               content: [
                 {
                   type: 'text',
-                  text: 'Requesting average QPM from SimilarWeb for these domains:',
+                  text: 'Requesting average QPM from SimilarWeb Using this configuration',
+                },
+              ],
+            },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Use Case :',
+                  marks: [{type: 'strong'}],
+                },
+                {
+                  type: 'text',
+                  text: body.useCase ? body.useCase : ""
+                },
+              ],
+            },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Case Deflection :',
+                  marks: [{type: 'strong'}],
+                },
+                {
+                  type: 'text',
+                  text: String(body.caseDeflection ?? ''),
+                },
+              ],
+            },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Country :',
+                  marks: [{type: 'strong'}],
+                },
+                {
+                  type: 'text',
+                  text: body.country ? body.country : ""
+                },
+              ],
+            },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Domains :',
+                  marks: [{type: 'strong'}],
                 },
               ],
             },
@@ -75,7 +128,66 @@ async function createJiraSubtaskWithLibrary(assigneeId, domains) {
                   },
                 ],
               })),
+            }, {
+              type: 'rule',
             },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Results :',
+                  marks: [
+                    {
+                      type: 'strong',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Estimated QPM: ',
+                  marks: [{type: 'strong'}],
+                },
+                {
+                  type: 'text',
+                  text: new Intl.NumberFormat().format(body.responseData?.estimatedQPM || 0)
+
+                },
+              ],
+            },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Average Visits: ',
+                  marks: [{type: 'strong'}],
+                },
+                {
+                  type: 'text',
+                  text: new Intl.NumberFormat().format(body.responseData.averageVisits),
+                },
+              ],
+            },
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Average Bounce Rates: ',
+                  marks: [{type: 'strong'}],
+                },
+                {
+                  type: 'text',
+                  text: new Intl.NumberFormat().format(body.responseData.averageBounceRates) + '%',
+                },
+              ],
+            }
           ],
         },
         issuetype: {
