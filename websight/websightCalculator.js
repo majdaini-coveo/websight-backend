@@ -100,7 +100,7 @@ function cleanDomainUrls(domains) {
     const cleanedUrl = obj.url
       .replace(/^(https?:\/\/)?(www\.)?/, '')
       .replace(/\/$/, '');
-    return {url: cleanedUrl};
+    return {url: cleanedUrl.toLowerCase()};
   });
 }
 
