@@ -17,13 +17,13 @@ const port = 3000;
 
 app.post("/similarWeb", async function (req, res) {
   try {
-    const requesterEmail = req.body.email
-    const assigneeID = await findAssigneeID(requesterEmail)
-    const newIssue = await createJiraSubtaskWithLibrary(assigneeID, req.body.domains)
+    // const requesterEmail = req.body.email
+    // const assigneeID = await findAssigneeID(requesterEmail)
+    // const newIssue = await createJiraSubtaskWithLibrary(assigneeID, req.body.domains)
     const responseData = await calculateQPM(req.body);
-    await updateJiraDescriptionWithResponse(newIssue, responseData)
-    await editJiraTaskStatus(newIssue, assigneeID, "Done")
-    res.status(200).json(responseData);
+    // await updateJiraDescriptionWithResponse(newIssue, responseData)
+    // await editJiraTaskStatus(newIssue, assigneeID, "Done")
+    res.json(responseData);
   } catch (err) {
     res.status(400).json({
       message: "An error occurred while processing your request.",
@@ -31,6 +31,23 @@ app.post("/similarWeb", async function (req, res) {
     });
   }
 });
+
+app.post("/jiracreator", async function (req, res) {
+
+  try {
+    const requesterEmail = req.headers['x-user-email']
+    const assigneeID = await findAssigneeID(requesterEmail)
+    const newIssue = await createJiraSubtaskWithLibrary(assigneeID, req.body)
+    await editJiraTaskStatus(newIssue, assigneeID, "Done")
+    res.status(200).end();
+  } catch (e) {
+    res.status(400).json({
+      message: "An error occurred while creating jiraTicketCreator.",
+      error: err.message
+    })
+  }
+
+})
 
 
 app.listen(port, function () {
