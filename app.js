@@ -15,8 +15,9 @@ const port = 3000;
 
 
 app.post("/similarWeb", async function (req, res) {
-  await googleOathverification(req.headers.authorization?.replace(/^Bearer\s+/i, ''));
+
   try {
+    await googleOathverification(req.headers.authorization?.replace(/^Bearer\s+/i, ''));
     const responseData = await calculateQPM(req.body);
     res.json(responseData);
   } catch (err) {
@@ -28,9 +29,9 @@ app.post("/similarWeb", async function (req, res) {
 });
 
 app.post("/jiracreator", async function (req, res) {
-  await googleOathverification(req.headers.authorization?.replace(/^Bearer\s+/i, ''));
 
   try {
+    await googleOathverification(req.headers.authorization?.replace(/^Bearer\s+/i, ''));
     const requesterEmail = req.headers['x-user-email']
     const assigneeID = await findAssigneeID(requesterEmail)
     const newIssue = await createJiraSubtaskWithLibrary(assigneeID, req.body)
