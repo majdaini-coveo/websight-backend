@@ -1,18 +1,15 @@
 // createSubtask.js using the jira.js library
 const {Version3Client} = require('jira.js');
 
-const JIRA_DOMAIN = 'coveord.atlassian.net';
-const JIRA_EMAIL = 'majdaini@coveo.com';
-const JIRA_API_TOKEN = "ATATT3xFfGF0H_Oq5MdxupSBYeoJKBxgPy-PcEbSAEABijyzmRv81U9FfoSin64fqQ0qSaiAwFgKpmI1aPcFgs6CrXepY7PCgi7XAYwSNPzJp1VaTV39JVGX6HxxQWCYQA9SVFoyxO2HNXuozGX5rXgO9L1BOOybkIWZGn_axdvR7ayPmzaFEKs=F5B52702";
 const PARENT_ISSUE_KEY = 'CTR24-242';
 const SUBTASK_SUMMARY = 'QPM service request';
 
 const client = new Version3Client({
-  host: `https://${JIRA_DOMAIN}`,
+  host: `https://${process.env.JIRA_DOMAIN}`,
   authentication: {
     basic: {
-      email: JIRA_EMAIL,
-      apiToken: JIRA_API_TOKEN,
+      email: process.env.JIRA_EMAIL,
+      apiToken: process.env.JIRA_API_TOKEN,
     },
   },
 });
