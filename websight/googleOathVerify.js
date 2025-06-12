@@ -6,6 +6,8 @@ async function googleOathverification(token) {
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.WEB_CLIENT_ID,
+  }).catch(() => {
+    throw new Error('Unable to verify the client');
   });
   const payload = ticket.getPayload();
   if (payload['hd'] !== 'coveo.com') {
