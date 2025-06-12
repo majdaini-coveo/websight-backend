@@ -9,12 +9,13 @@ const {
   findAssigneeID,
   editJiraTaskStatus,
 } = require("./websight/jiraHandler");
-
+const googleOathverification = require("./websight/googleOathVerify");
 
 const port = 3000;
 
 
 app.post("/similarWeb", async function (req, res) {
+  await googleOathverification(req.headers.authorization?.replace(/^Bearer\s+/i, ''));
   try {
     const responseData = await calculateQPM(req.body);
     res.json(responseData);
@@ -27,6 +28,7 @@ app.post("/similarWeb", async function (req, res) {
 });
 
 app.post("/jiracreator", async function (req, res) {
+  await googleOathverification(req.headers.authorization?.replace(/^Bearer\s+/i, ''));
 
   try {
     const requesterEmail = req.headers['x-user-email']
